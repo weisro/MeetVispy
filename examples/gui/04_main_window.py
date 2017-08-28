@@ -76,7 +76,7 @@ class MainWindow(MainWindowBase):
         if event.handled or event.button != 1:
             return
         if self.selected_line is not None:
-            self.selected_line.set_data(width=1)
+            self.selected_line.set_data(color="k")
             self.selected_line = None
             return
         for v in self.viewer.visuals_at(event.pos):
@@ -84,7 +84,7 @@ class MainWindow(MainWindowBase):
                 self.selected_line = v
                 break
         if self.selected_line is not None:
-            self.selected_line.set_data(width=3)
+            self.selected_line.set_data(color="r")
 
     def on_mouse_move(self, event):
         if self.selected_line is None:

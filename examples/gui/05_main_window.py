@@ -7,9 +7,7 @@ Ui_MainWindow, MainWindowBase = uic.loadUiType('MainWindow.ui')
 
 import numpy as np
 from vispy import scene
-
 from examples.gui.custom_plot_widget import CustomPlotWidget, LabelText
-
 
 # candle stick chart with visuals
 class MainWindow(MainWindowBase):
@@ -25,15 +23,16 @@ class MainWindow(MainWindowBase):
         self.viewer._grid = self.viewer.central_widget.add_grid()
         self.viewer._grid._default_class = CustomPlotWidget
         self.viewer.freeze()
+        self.viewer.measure_fps()
 
         self.chart = self.viewer._grid[0, 0]
         ylabel= LabelText("y", dim=30)
         xlabel = LabelText("x", dim=30)
         self.chart.configure(ylabel=ylabel, xlabel=xlabel)
-        path = os.path.sep.join(["C:", "Users", "Roman", "fxdata", "Candlesticks.csv"])
+        path = os.path.sep.join(["C:", "fxdata", "Candlesticks.csv"])
         data_points = np.genfromtxt(path, skip_header=1, delimiter=",")
         data_list = []
-        for i in range(100):
+        for i in range(10):
             data_list.append({
                 "time": i,
                 "open": data_points[i, 1],
