@@ -9,8 +9,8 @@ from vispy import scene
 
 from examples.gui.custom_plot_widget import CustomPlotWidget, LabelText
 
-n_size = 10000
-x = np.linspace(0, 100, n_size)
+n_size = 1000000
+x = np.linspace(0, 50, n_size)
 
 data_model = {
     "dataset a": {

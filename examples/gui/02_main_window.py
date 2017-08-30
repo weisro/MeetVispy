@@ -25,7 +25,7 @@ class MainWindow(MainWindowBase):
         self.viewer._grid._default_class = CustomPlotWidget
         self.viewer.freeze()
 
-        x = np.linspace(0, 10, 100000)
+        x = np.linspace(0, 10, 1000000)
         ytop = np.cos(x)
         ybottom = np.sin(x)
 

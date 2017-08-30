@@ -9,6 +9,8 @@ import numpy as np
 from vispy import scene
 from examples.gui.custom_plot_widget import CustomPlotWidget, LabelText
 
+from vispy.color import Color
+
 # candle stick chart with visuals
 class MainWindow(MainWindowBase):
     def __init__(self):
@@ -24,6 +26,10 @@ class MainWindow(MainWindowBase):
         self.viewer._grid._default_class = CustomPlotWidget
         self.viewer.freeze()
         self.viewer.measure_fps()
+
+        self.selected_candle = None
+        self.base_color = None
+        self.viewer.connect(self.on_mouse_press)
 
         self.chart = self.viewer._grid[0, 0]
         ylabel= LabelText("y", dim=30)
@@ -43,6 +49,23 @@ class MainWindow(MainWindowBase):
             })
 
         self.chart.plot(data_list, kind="candle_stick")
+
+    def on_mouse_press(self, event):
+        if event.handled or event.button != 1:
+            return
+        if self.selected_candle is not None:
+            self.selected_candle._color = self.base_color
+            self.selected_candle._update()
+            self.selected_candle = None
+            return
+        for v in self.viewer.visuals_at(event.pos):
+            if isinstance(v, scene.visuals.Rectangle):
+                self.selected_candle = v
+                break
+        if self.selected_candle is not None:
+            self.base_color = self.selected_candle._color
+            self.selected_candle._color = Color("y")
+            self.selected_candle._update()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

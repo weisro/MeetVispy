@@ -64,7 +64,8 @@ class CustomPlotWidget(scene.Widget):
         rect = None
         if height > 0:
             rect = scene.Rectangle(center=center, height=height, width=width, color = "green" if bullish else "red",
-                                   border_color="black", border_width=2.0)
+                                   border_color="black", border_width=200.0)
+            rect.interactive = True
             self.view.add(rect)
         else:
             line_empty_body = scene.Line(pos=np.array([[time - width*0.5, close], [time + width*0.5, close]]), color="black", width=2.0)
